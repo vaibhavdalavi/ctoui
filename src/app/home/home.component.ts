@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { User } from '../models/user';
 import { UserService } from '../services/user.service';
 import { AuthService } from '../services/auth.service';
+import { QuestionComponent } from '../question/question.component';
+import { EventEmitter } from 'events';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +14,9 @@ export class HomeComponent implements OnInit {
   currentUser: User;
   isTimerRunning = false;
   stopWatch = new StopWatch();
+  @Input() question: QuestionComponent;
+  @Input() selectedQuestion: number;
+  @Output() selectedChoice = new EventEmitter();
   
   constructor(private userService: UserService,
     public authService: AuthService) { 
@@ -19,6 +24,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  onClicked(index) {
+    this.selectedChoice.emit(index);
   }
 
   toggleStartStopTimer(): void {

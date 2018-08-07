@@ -9,6 +9,11 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { HttpModule } from '@angular/http';
 import { AlertComponent } from './alert/alert.component';
+import { QuestionComponent } from './question/question.component';
+import { ChoiceComponent } from './choice/choice.component';
+import { QuizzComponent } from './quizz/quizz.component';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -16,13 +21,18 @@ import { AlertComponent } from './alert/alert.component';
     RegisterComponent,
     LoginComponent,
     HomeComponent,
-    AlertComponent
+    AlertComponent,
+    QuestionComponent,
+    ChoiceComponent,
+    QuizzComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpModule
+    CarouselModule.forRoot(),
+    HttpModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

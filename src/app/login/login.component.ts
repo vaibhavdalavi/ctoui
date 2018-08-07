@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
   login(): void {
 
     this.submitted = true;
-    
+
     if (this.loginForm.dirty && this.loginForm.valid) {
       debugger;
       this.userService.login(this.loginForm.value)
@@ -49,10 +49,12 @@ export class LoginComponent implements OnInit {
         .subscribe(
         loginResponse => {
           if (loginResponse.status === LoginResponse.StatusEnum.SUCCESS) {
+            debugger;
             this.authService.isLoggedIn = true;
             this.authService.user = loginResponse.user;
             this.authService.actingUser = Object.assign({}, this.authService.user);
-            this.router.navigate(['/home']);
+            if (null != this.authService.user)
+              this.router.navigate(['/home']);
           } else {
             this.authService.isLoggedIn = false;
             debugger;
@@ -72,7 +74,7 @@ export class LoginComponent implements OnInit {
         }
         );
     } else if (!this.loginForm.dirty) {
-      //this.errorMessage = 'Please provide valid username and password';
+      return;
     }
   }
 
