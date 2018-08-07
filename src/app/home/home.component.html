@@ -1,4 +1,25 @@
-<h1>Hi {{currentUser.name}}!</h1>
-<p>You're logged in with Angular 6!!</p>
+<h3>Hi {{currentUser.name | uppercase}}!</h3> <p><a [routerLink]="['/login']">Logout</a></p>
+<p>Click here to view the questions.</p>
 
-<p><a [routerLink]="['/login']">Logout</a></p>
+
+<button *ngIf="!isTimerRunning && stopWatch.numberOfSecondsRead == 0" (click)="toggleStartStopTimer()" 
+        mat-raised-button>
+        <div class="btn-start-stop-content">
+          <span>Start Assessment</span>
+          <span>{{stopWatch.displayText}}</span>
+        </div>
+      </button>
+      <button *ngIf="isTimerRunning" class="btn-start-stop btn-start-stop-running" (click)="toggleStartStopTimer()" mat-raised-button>
+        <div class="btn-start-stop-content">
+          <span>Stop / Complete</span>
+          <span>{{stopWatch.displayText}}</span>
+        </div>
+      </button>
+
+      <button *ngIf="!isTimerRunning && stopWatch.numberOfSecondsRead > 0" (click)="resetTimer()" 
+        mat-raised-button>
+        <div class="btn-start-stop-content">
+          <span>Re-assess</span>
+          
+        </div>
+      </button>

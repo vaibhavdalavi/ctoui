@@ -39,34 +39,36 @@ export class LoginComponent implements OnInit {
   get f() { return this.loginForm.controls; }
 
   login(): void {
-    //this.message = 'Trying to log in ...';
-    // tslint:disable-next-line:no-debugger
-    // debugger;
+
+    this.submitted = true;
+    
     if (this.loginForm.dirty && this.loginForm.valid) {
       debugger;
       this.userService.login(this.loginForm.value)
+      .pipe(first())
         .subscribe(
         loginResponse => {
-          // tslint:disable-next-line:no-debugger
-          // debugger;
           if (loginResponse.status === LoginResponse.StatusEnum.SUCCESS) {
-
             this.authService.isLoggedIn = true;
             this.authService.user = loginResponse.user;
-
             this.authService.actingUser = Object.assign({}, this.authService.user);
             this.router.navigate(['/home']);
-            //this.postLogin();
-
           } else {
             this.authService.isLoggedIn = false;
-            //this.errorMessage = loginResponse.message;
+            debugger;
+            error => {
+              this.alertService.error(error);
+              this.loading= false;
+            }
           }
           return;
         },
-        (error: any) => {
+       data => {
           this.authService.isLoggedIn = false;
-          //this.handleError(error);
+          error => {
+            this.alertService.error(error);
+            this.loading= false;
+          }
         }
         );
     } else if (!this.loginForm.dirty) {
@@ -74,22 +76,4 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  /*onSubmit() {
-    this.submitted = true;
-
-    if (this.loginForm.invalid) {
-      return;
-    }
-
-    this.loading=true;
-    this.authenticationService.login(this.f.name.value, this.f.password.value)
-    .pipe(first())
-    .subscribe(
-      data => { this.router.navigate([this.returnUrl]); },
-      error => {
-        this.alertService.error(error); 
-        this.loading=false; 
-      }
-    )
-  }*/
 }
